@@ -29,5 +29,4 @@ export const MASTER_FORMAT = `#EXTM3U
 720p/index.m3u8
 `;
 
-export const uploadDir = path.join(__dirname, "../../static/video");
 export const hlsDir = path.join(__dirname, "../../static/hls");

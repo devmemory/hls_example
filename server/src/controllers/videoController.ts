@@ -9,7 +9,6 @@ import {
   hlsDir,
   MASTER_FORMAT,
   resolutions,
-  uploadDir,
 } from "../constants/file";
 import { ResolutionModel } from "../models/ResolutionModel";
 
@@ -83,7 +82,7 @@ class VideoController {
   }
 
   public upload = async (req: Request, res: Response) => {
-    console.log("[upload] video", { uploadDir });
+    console.log("[upload] video");
 
     const form = formidable({
       keepExtensions: true,
