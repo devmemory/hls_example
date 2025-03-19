@@ -11,7 +11,7 @@ import {
   resolutions,
   uploadDir,
 } from "../constants/file";
-import { Completer } from "../utils/completer";
+import { ResolutionModel } from "../models/ResolutionModel";
 
 class VideoController {
   public getList(_: Request, res: Response) {
@@ -110,7 +110,7 @@ class VideoController {
       const filePath = file.filepath;
       const outputFolder = path.join(hlsDir, path.parse(filePath).name);
 
-      this._convertToHLS(filePath, outputFolder);
+      await this._convertToHLS(filePath, outputFolder);
 
       res.status(STATUS_CODE.ok).json({ msg: "Upload & conversion complete" });
     } catch (err) {
@@ -119,13 +119,37 @@ class VideoController {
     }
   };
 
-  private _convertToHLS = (inputFilePath: string, outputFolder: string) => {
+  private _convertToHLS = async (
+    inputFilePath: string,
+    outputFolder: string
+  ) => {
     mkdirSync(outputFolder, { recursive: true });
 
-    const completer = new Completer<void>();
+    const conversionPromises = resolutions.map((resolution) =>
+      this._convertSingleBitrate({ ...resolution, inputFilePath, outputFolder })
+    );
 
-    resolutions.forEach(({ name, width, height, bitrate, audioBitrate }) => {
-      const resFolder = path.join(outputFolder, name); // Separate folder per resolution
+    try {
+      await Promise.all(conversionPromises);
+
+      writeFileSync(path.join(outputFolder, "master.m3u8"), MASTER_FORMAT);
+      console.log("[convert] Master M3U8 file created!");
+    } catch (error) {
+      console.error("[convert] Error in FFmpeg conversion:", error);
+    }
+  };
+
+  private _convertSingleBitrate = ({
+    name,
+    width,
+    height,
+    bitrate,
+    audioBitrate,
+    inputFilePath,
+    outputFolder,
+  }: ResolutionModel & { outputFolder: string; inputFilePath: string }) => {
+    return new Promise<void>((res, rej) => {
+      const resFolder = path.join(outputFolder, name);
       mkdirSync(resFolder, { recursive: true });
 
       const ffmpegProcess = spawn("ffmpeg", [
@@ -157,7 +181,7 @@ class VideoController {
         "aac",
         "-b:a",
         audioBitrate,
-        path.join(resFolder, "index.m3u8"), // Each resolution gets its own index.m3u8
+        path.join(resFolder, "index.m3u8"),
       ]);
 
       ffmpegProcess.stdout.on("data", (data) =>
@@ -166,20 +190,18 @@ class VideoController {
       ffmpegProcess.stderr.on("data", (data) =>
         console.error(`[FFmpeg ${name} stderr]: ${data}`)
       );
+
       ffmpegProcess.on("close", (code) => {
         if (code === 0) {
           const m3u8Path = `/static/hls/${path.basename(resFolder)}/index.m3u8`;
           console.log("[convert] Success! HLS file:", m3u8Path);
+          res();
         } else {
           console.log("[convert] FFmpeg exited with error code:", code);
-          completer.reject(new Error(`FFmpeg failed with code ${code}`));
+          rej(new Error(`FFmpeg failed with code ${code}`));
         }
       });
     });
-
-    writeFileSync(path.join(outputFolder, "master.m3u8"), MASTER_FORMAT);
-
-    completer.complete();
   };
 }
 
