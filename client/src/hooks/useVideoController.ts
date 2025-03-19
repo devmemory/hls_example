@@ -140,7 +140,7 @@ const useVideoController = () => {
   /** - set video listeners */
   const _setVideoListener = (reset = false) => {
     if (reset) {
-      if(videoRef.current){
+      if (videoRef.current) {
         videoRef.current.onloadedmetadata = null;
         videoRef.current.oncanplay = null;
         videoRef.current.ontimeupdate = null;
@@ -320,13 +320,15 @@ const useVideoController = () => {
 
     setSaveMode((state) => {
       if (state.start) {
-        state.endTime = duration.current;
+        return { ...state, start: !state.start, endTime: duration.current };
       } else {
-        state.startTime = duration.current;
-        state.img = img;
+        return {
+          ...state,
+          start: !state.start,
+          startTime: duration.current,
+          img,
+        };
       }
-
-      return { ...state, start: !state.start };
     });
   };
 
