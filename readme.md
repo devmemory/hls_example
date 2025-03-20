@@ -1,5 +1,5 @@
-# hls example
-- ffmpeg is essential to try this example
+# HLS(HTTP Live Streaming) example
+- FFmpeg is essential in this example
 
 ## client
 - View library: React
@@ -65,4 +65,4 @@
 ### React server : https://devmemory.tistory.com/132
 ### Outro : https://devmemory.tistory.com/133
 
-<img src="https://blog.kakaocdn.net/dn/JzhRb/btsMP1YBHtk/cKxo7oV5qKJ0SfRUlFlqp0/img.gif"/>
+![test](https://github.com/user-attachments/assets/0dc372b1-0e1a-4642-b7df-57d5d4207509)
