@@ -57,3 +57,12 @@
 
 #### routes
 - video: video api
+
+---
+## Post link
+### Intro : https://devmemory.tistory.com/130
+### Node server : https://devmemory.tistory.com/131
+### React server : https://devmemory.tistory.com/132
+### Outro : https://devmemory.tistory.com/133
+
+<img src="https://blog.kakaocdn.net/dn/JzhRb/btsMP1YBHtk/cKxo7oV5qKJ0SfRUlFlqp0/img.gif"/>
