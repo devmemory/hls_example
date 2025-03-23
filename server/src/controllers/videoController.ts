@@ -2,6 +2,7 @@ import { spawn } from "child_process";
 import { Request, Response } from "express";
 import formidable from "formidable";
 import { accessSync, mkdirSync, readdir, statSync, writeFileSync } from "fs";
+import { cpus } from "os";
 import path from "path";
 import { STATUS_CODE } from "../constants/code";
 import {
@@ -13,6 +14,8 @@ import {
 import { ResolutionModel } from "../models/ResolutionModel";
 
 class VideoController {
+  private cores = cpus().length;
+
   public getList(_: Request, res: Response) {
     readdir(hlsDir, (err, files) => {
       if (err) {
@@ -169,7 +172,7 @@ class VideoController {
         "-f",
         "hls",
         "-threads",
-        "4",
+        `${this.cores}`,
         "-c:v",
         "libx264",
         "-b:v",
