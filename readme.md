@@ -65,4 +65,8 @@
 ### React server : https://devmemory.tistory.com/132
 ### Outro : https://devmemory.tistory.com/133
 
+### upload
+![core](https://github.com/user-attachments/assets/19f54d56-722f-4707-ae76-1cae1fd4a38b)
+
+### upload & play
 ![test](https://github.com/user-attachments/assets/0dc372b1-0e1a-4642-b7df-57d5d4207509)
