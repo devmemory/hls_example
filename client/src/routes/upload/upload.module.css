@@ -20,6 +20,10 @@
   color: var(--primary-color);
 }
 
+.pending {
+  background-color: var(--shadow-color);
+}
+
 .in {
   outline: 4px dashed var(--point-orange) !important;
 }

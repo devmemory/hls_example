@@ -5,3 +5,5 @@ export const KEY_CODE = {
   arrowUp: "ArrowUp",
   arrowDown: "ArrowDown",
 } as const;
+
+export const MAX_FILE_SIZE = 500 * 1024 * 1024;

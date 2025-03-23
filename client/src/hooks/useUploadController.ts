@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosProgressEvent } from "axios";
 import { ChangeEvent, DragEvent, MouseEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { MAX_FILE_SIZE } from "src/data/constants";
 import { uploadVideo } from "src/services/videoApi";
 
 const useUploadController = () => {
@@ -18,8 +19,8 @@ const useUploadController = () => {
     },
     onError(error) {
       toast.error(error.message);
-      setPercent(0)
-      ref.current!.value = ""
+      setPercent(0);
+      ref.current!.value = "";
     },
   });
 
@@ -27,7 +28,11 @@ const useUploadController = () => {
     e.preventDefault();
 
     const fileList = e.dataTransfer.files;
-    _validateFile(fileList);
+    const file = _validateFile(fileList);
+
+    if (file) {
+      onUploadFile(file);
+    }
 
     onDragLeave();
   };
@@ -40,13 +45,27 @@ const useUploadController = () => {
     console.log({ file });
 
     if (file) {
-      try {
-        mutation.mutate({ file, onUploadProgress });
-      } catch (e) {
-        ref.current!.value = "";
-        setErrMsg(`${e}`);
-      }
+      onUploadFile(file);
     }
+  };
+
+  const onUploadFile = (file: File) => {
+    try {
+      mutation.mutate({ file, onUploadProgress });
+    } catch (e) {
+      ref.current!.value = "";
+      setErrMsg(`${e}`);
+    }
+  };
+
+  const checkFileSize = (file: File) => {
+    if (file.size > MAX_FILE_SIZE) {
+      const max = Math.round(MAX_FILE_SIZE / 1024 / 1024);
+      const uploaded = Math.round(file.size / 1024 / 1024);
+      return `File size is too big. Maximum size is ${max}Mb, uploaded file size is ${uploaded}Mb`;
+    }
+
+    return null;
   };
 
   const onUploadProgress = (e: AxiosProgressEvent) => {
@@ -81,7 +100,9 @@ const useUploadController = () => {
 
       return;
     } else {
-      setErrMsg(null);
+      const msg = checkFileSize(file);
+
+      setErrMsg(msg);
     }
 
     return file;
@@ -119,6 +140,7 @@ const useUploadController = () => {
     isIn,
     errMsg,
     percent,
+    isLoading: mutation.isPending
   };
 };
 

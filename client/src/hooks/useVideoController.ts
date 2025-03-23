@@ -8,9 +8,10 @@ import { DurationModel } from "src/models/DurationModel";
 import { SaveTimeModel, TimelineModel } from "src/models/TimelineModel";
 import { getVideoList } from "src/services/videoApi";
 import commonUtil from "src/utils/commonUtil";
+import useCustomToast from "./toast/useCUstomToast";
 
 const useVideoController = () => {
-  const { data } = useQuery({
+  const { data, error } = useQuery({
     queryKey: ["video_list"],
     queryFn: getVideoList,
   });
@@ -71,6 +72,8 @@ const useVideoController = () => {
     endTime: 0,
   });
 
+  const { onOpenToast } = useCustomToast();
+
   // init media and listener
   useEffect(() => {
     if (videoList.length > 0) {
@@ -83,6 +86,12 @@ const useVideoController = () => {
       _reset();
     };
   }, [videoList, videoIdx]);
+
+  useEffect(() => {
+    if (error) {
+      onOpenToast();
+    }
+  }, [error]);
 
   // screen mode change
   useEffect(() => {

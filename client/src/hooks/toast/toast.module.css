@@ -1,0 +1,15 @@
+.div_toast {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.div_toast > button {
+  color: rgb(98, 165, 227);
+}
+
+.div_toast > button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
