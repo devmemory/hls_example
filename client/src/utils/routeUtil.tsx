@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 const MainPage = lazy(() => import("src/routes/main"));
 const UploadPage = lazy(() => import("src/routes/upload"));
-const ViewerPage = lazy(() => import("src/routes/Viewer"));
+const ViewerPage = lazy(() => import("src/routes/viewer"));
 
 export const routeName = {
   main: "/",

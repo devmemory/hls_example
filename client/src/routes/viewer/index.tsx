@@ -1,9 +1,9 @@
 import React from "react";
 import Loading from "src/components/Loading";
-import useVideoController from "src/hooks/useVideoController";
-import Control from "src/routes/Viewer/components/Control";
-import Overlay from "src/routes/Viewer/components/Overlay";
-import VideoList from "src/routes/Viewer/components/VideoList";
+import useVideoController from "src/hooks/viewer/useVideoController";
+import Control from "src/routes/viewer/components/Control";
+import Overlay from "src/routes/viewer/components/Overlay";
+import VideoList from "src/routes/viewer/components/VideoList";
 import styles from "./viewer.module.css";
 
 const ViewerPage = () => {

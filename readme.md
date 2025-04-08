@@ -16,11 +16,10 @@
 
 #### data
 - constants
-- sampleData: to use this example, useVideoControllerler should be changed
 
 #### hooks
-- useUploadController: uploading video controller
-- useVideoController: video player controller
+- upload/useUploadController: uploading video controller
+- viewer/useVideoController: video player controller
 
 #### models
 - DurationModel: video current and total playing time model
@@ -34,6 +33,9 @@
 #### services
 - api: api common setting
 - videoApi: video list, video update api
+
+#### styles
+- toast style
 
 #### utils
 - commonUtil

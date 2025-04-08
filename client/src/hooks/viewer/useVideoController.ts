@@ -8,7 +8,7 @@ import { DurationModel } from "src/models/DurationModel";
 import { SaveTimeModel, TimelineModel } from "src/models/TimelineModel";
 import { getVideoList } from "src/services/videoApi";
 import commonUtil from "src/utils/commonUtil";
-import useCustomToast from "./toast/useCUstomToast";
+import useCustomToast from "../common/useCustomToast";
 
 const useVideoController = () => {
   const { data, error } = useQuery({

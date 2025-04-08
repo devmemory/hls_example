@@ -2,7 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { routeName } from "src/utils/routeUtil";
-import styles from "./toast.module.css";
+import styles from "src/styles/toast.module.css";
 
 const useCustomToast = () => {
   const navigate = useNavigate();

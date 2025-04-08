@@ -1,6 +1,6 @@
 import React from "react";
 import Loading from "src/components/Loading";
-import useUploadController from "src/hooks/useUploadController";
+import useUploadController from "src/hooks/upload/useUploadController";
 import LabelComponent from "./LabelComponent";
 import styles from "./upload.module.css";
 
