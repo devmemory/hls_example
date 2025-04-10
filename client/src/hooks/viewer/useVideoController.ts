@@ -6,14 +6,14 @@ import toast from "react-hot-toast";
 import { KEY_CODE } from "src/data/constants";
 import { DurationModel } from "src/models/DurationModel";
 import { SaveTimeModel, TimelineModel } from "src/models/TimelineModel";
-import { getVideoList } from "src/services/videoApi";
+import { apiManager } from "src/services/apiManager";
 import commonUtil from "src/utils/commonUtil";
 import useCustomToast from "../common/useCustomToast";
 
 const useVideoController = () => {
   const { data, error } = useQuery({
     queryKey: ["video_list"],
-    queryFn: getVideoList,
+    queryFn: apiManager.getVideoList,
   });
 
   const videoList = data ?? [];

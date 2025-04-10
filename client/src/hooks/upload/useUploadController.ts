@@ -3,7 +3,7 @@ import { AxiosProgressEvent } from "axios";
 import { ChangeEvent, DragEvent, MouseEvent, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { MAX_FILE_SIZE } from "src/data/constants";
-import { uploadVideo } from "src/services/videoApi";
+import { apiManager } from "src/services/apiManager";
 
 const useUploadController = () => {
   const ref = useRef<HTMLInputElement>(null);
@@ -13,7 +13,7 @@ const useUploadController = () => {
   const [percent, setPercent] = useState<number>(0);
 
   const mutation = useMutation({
-    mutationFn: uploadVideo,
+    mutationFn: apiManager.uploadVideo,
     onSuccess(result) {
       toast.success(result);
     },
@@ -140,7 +140,7 @@ const useUploadController = () => {
     isIn,
     errMsg,
     percent,
-    isLoading: mutation.isPending
+    isLoading: mutation.isPending,
   };
 };
 
